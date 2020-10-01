@@ -1,0 +1,219 @@
+@charset "UTF-8";
+
+h2 {
+	text-align: center;
+}
+
+h3 {
+	text-align: center;
+	text-decoration: underline;
+}
+
+h4 {
+	text-align: center;
+	font-style: bold;
+	font-size: 30px;
+}
+
+p {
+	text-align: center;
+}
+
+.header {
+	width: 1200px;
+	margin: -8px auto 0 auto;
+	border-bottom: 2px solid gray;
+}
+
+.header-bottom {
+	display: flex;
+	justify-content: space-between;
+	align-items: flex-end;
+	background-color: #544545;
+	margin-top: -3px;
+}
+
+.header-text {
+	font-size: 30px;
+	font-weight: 700;
+}
+
+.header-logo-text {
+	font-family: fantasy;
+}
+
+.header-text-system {
+	display: block;
+	font-size: 18px;
+	margin-left: 38px;
+	/* margin-top: -14px; */
+}
+
+.header-logout {
+	width: 80%;
+	text-align: right;
+}
+
+.logout-link {
+	font-size: 18px;
+	margin-bottom: 10px;
+	margin-right: 10px;
+}
+
+.content {
+	min-height: 450px;
+	width: 1200px;
+	margin: 0 auto;
+}
+
+.footer {
+	width: 700px;
+	margin: 0 auto;
+	margin-top: 50px;
+	height: 100px;
+	text-align: center;
+	border-top: 1px solid gray;
+	padding: 10px;
+}
+
+.fireTable {
+	margin-left: 285px;
+	margin-right: auto;
+	border-spacing: 10px;
+}
+
+.formTable {
+	margin-left: 235px;
+	border-spacing: 10px;
+}
+
+.fireDetailsTable {
+	text-align: left;
+}
+
+.fireLink {
+	display: flex;
+	justify-content: center;
+	margin-top: 10px;
+}
+
+#loginStatusMsg {
+	text-align: center;
+}
+
+.nameTableHeader {
+	text-align: center;
+	background: #B5B5B5;
+	border-bottom: 1px solid #000000;
+	padding: 2px;
+}
+
+.nameTableOddRow {
+	text-align: center;
+	background: #FFFFFF;
+}
+
+.nameTableEvenRow {
+	text-align: center;
+	background: #D3D3D3;
+}
+
+label {
+	display: inline-block;
+	/* width: 300px; */
+	text-align: right;
+}
+
+textarea {
+	width: 300px;
+	height: 150px;
+	vertical-align: top;
+	margin: auto;
+	display: inline-block;
+}
+
+select {
+	display: inline-block;
+	margin: auto;
+}
+
+::placeholder {
+	font-style: italic;
+}
+
+.userFireEvents {
+	margin-top: 40px;
+	margin-bottom: 50px;
+}
+
+.reportFireBtn {
+	background-color: #a50d0d;
+	font-size: 17px;
+	color: white;
+	border: 1px solid black;
+	padding: 5px 20px;
+	border-radius: 5px;
+}
+
+.rangerWarnBtn {
+	background-color: #ffff9f;
+	font-size: 17px;
+	border: 1px solid black;
+	padding: 5px 20px;
+	/* float:right; */
+}
+
+.table {
+	text-align: center;
+}
+
+.tableHeader {
+	display: flex;
+	justify-content: space-between;
+	margin-bottom: 15px;
+	margin-top: 50px;
+}
+
+.tableHeaderTitle {
+	font-size: 25px;
+	font-weight: 700;
+}
+
+.addRanger {
+	float: right;
+}
+
+.center {
+	margin-left: 300px;
+	width: 62%;
+}
+
+.labelColumn {
+	text-align: right;
+	width: 200px;
+	font-size: 18px;
+}
+
+.buttonsColumn {
+	text-align: center;
+}
+
+.ui-dialog-buttonpane {
+	text-align: right !important;
+}
+
+.ui-messages-error {
+	font-family: Arial, sans-serif;
+	font-size: 1em;
+	border-radius: 3px;
+	border: 1px solid;
+	margin: 0 5px;
+	padding: 2px 5px;
+	background-color: #f2dede;
+	border-color: #eed3d7;
+	color: red;
+}
+
+label.ui-widget {
+	font-size: 18px;
+}

@@ -1,0 +1,157 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition template="template.xhtml"
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui">
+
+	<ui:define name="title">Forests</ui:define>
+	<ui:param name="renderUser" value="true" />
+	<ui:param name="renderLogout" value="true" />
+
+	<ui:define name="content">
+	
+		<h:form>
+			<p:remoteCommand autoRun="true"
+				action="#{userLoginBean.validation()}" />
+			<p:tabMenu activeIndex="#{param.i}">
+				<p:menuitem value="Fire Reports" url="staff-dash.jsf">
+					<f:param name="i" value="0" />
+				</p:menuitem>
+				<p:menuitem value="Rangers" url="rangers-table.jsf">
+					<f:param name="i" value="1" />
+				</p:menuitem>
+				<p:menuitem value="Forest Areas" url="forests-table.jsf">
+					<f:param name="i" value="2" />
+				</p:menuitem>
+			</p:tabMenu>
+		</h:form>
+		
+		<div class="userFireEvents">
+			<h:form>
+				<p:messages id="messages" closable="true" />
+				<div class="tableHeader">
+					<span class="tableHeaderTitle">Forests list</span>
+					<p:button class="addRanger" value="Add Forest"
+						outcome="new-forest.jsf" ajax="false" />
+				</div>
+
+				<p:dataTable value="#{appStorageBean.forests}" var="forest"
+					resizableColumns="true" styleClass="table"
+					headerClass="nameTableHeader"
+					rowClasses="nameTableOddRow,nameTableEvenRow" paginator="true"
+					rows="6" paginatorPosition="bottom">
+					
+					<p:column>
+						<f:facet name="header">Name</f:facet>
+						<h:inputText value="#{forest.name}" rendered="#{forest.status}" />
+						<h:outputText value="#{forest.name}"
+							rendered="#{not forest.status}" />
+					</p:column>
+					
+					<p:column>
+						<f:facet name="header">State</f:facet>
+						<p:selectOneMenu required="true"
+							requiredMessage="State is required" id="state"
+							value="#{forest.state}" style="width:185px"
+							rendered="#{forest.status}">
+							<f:selectItem itemLabel="Select One" itemValue="" />
+							<f:selectItem itemLabel="Western Australia"
+								itemValue="#{appStorageBean.WESTERN_AUSTRALIA}" />
+							<f:selectItem itemLabel="Northern Territory"
+								itemValue="#{appStorageBean.NORTHERN_TERRITORY}" />
+							<f:selectItem itemLabel="South Australia"
+								itemValue="#{appStorageBean.SOUTH_AUSTRALIA}" />
+							<f:selectItem itemLabel="Queensland"
+								itemValue="#{appStorageBean.QUEENSLAND}" />
+							<f:selectItem itemLabel="New South Wales"
+								itemValue="#{appStorageBean.NEW_SOUTH_WALES}" />
+							<f:selectItem itemLabel="Victoria"
+								itemValue="#{appStorageBean.VICTORIA}" />
+							<f:selectItem itemLabel="Tasmania"
+								itemValue="#{appStorageBean.TASMANIA}" />
+							<f:facet name="footer">
+								<p:separator />
+								<h:outputText value="States" style="font-weight:bold;" />
+							</f:facet>
+						</p:selectOneMenu>
+
+						<h:outputText value="#{forest.state}"
+							rendered="#{not forest.status}" />
+					</p:column>
+					
+					<p:column>
+						<f:facet name="header">Direction</f:facet>
+						<p:selectOneMenu required="true"
+							requiredMessage="Direction is required" id="direction"
+							value="#{forest.direction}" style="width:185px"
+							rendered="#{forest.status}">
+							<f:selectItem itemLabel="Select One" itemValue="" />
+							<f:selectItem itemLabel="North" itemValue="#{appStorageBean.n}" />
+							<f:selectItem itemLabel="North-West"
+								itemValue="#{appStorageBean.NW}" />
+							<f:selectItem itemLabel="West" itemValue="#{appStorageBean.w}" />
+							<f:selectItem itemLabel="South-West"
+								itemValue="#{appStorageBean.SW}" />
+							<f:selectItem itemLabel="South" itemValue="#{appStorageBean.s}" />
+							<f:selectItem itemLabel="South-East"
+								itemValue="#{appStorageBean.SE}" />
+							<f:selectItem itemLabel="East" itemValue="#{appStorageBean.e}" />
+							<f:selectItem itemLabel="North-East"
+								itemValue="#{appStorageBean.NE}" />
+							<f:facet name="footer">
+								<p:separator />
+								<h:outputText value="Compass Directions"
+									style="font-weight:bold;" />
+							</f:facet>
+						</p:selectOneMenu>
+
+						<h:outputText value="#{forest.direction}"
+							rendered="#{not forest.status}" />
+					</p:column>
+					
+					<p:column>
+						<f:facet name="header">Surface</f:facet>
+						<h:inputText value="#{forest.surface}" rendered="#{forest.status}" />
+						<h:outputText value="#{forest.surface}"
+							rendered="#{not forest.status}" />
+					</p:column>
+					
+					<p:column>
+						<f:facet name="header">Actions</f:facet>
+						<p:commandButton ajax="false" value="Save"
+							action="#{appStorageBean.saveForest(forest)}"
+							rendered="#{forest.status}">
+							<f:param name="i" value="2" />
+						</p:commandButton>
+
+						<p:commandButton ajax="false" value="Edit"
+							action="#{appStorageBean.editForest(forest)}"
+							rendered="#{not forest.status}">
+							<f:param name="i" value="2" />
+						</p:commandButton>
+						<p:spacer width="5" />
+
+						<p:commandButton value="Delete"
+							action="#{appStorageBean.deleteForest(forest)}" update="@form"
+							rendered="#{not forest.status}">
+							<p:confirm header="Confirmation"
+								message="Are you sure you want to delete the forest?" />
+						</p:commandButton>
+
+						<p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
+							<p:commandButton value="Delete" type="button"
+								styleClass="ui-confirmdialog-yes" />
+							<p:commandButton value="Cancel" type="button"
+								styleClass="ui-confirmdialog-no" />
+						</p:confirmDialog>
+					</p:column>
+					
+				</p:dataTable>
+			</h:form>
+
+		</div>
+	</ui:define>
+</ui:composition>

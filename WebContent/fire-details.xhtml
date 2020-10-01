@@ -1,0 +1,147 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition template="template.xhtml"
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui">
+
+	<ui:define name="title">Fire Report Details</ui:define>
+	<ui:param name="renderUser" value="true" />
+	<ui:param name="renderLogout" value="true" />
+
+	<ui:define name="content">
+	<h:body onload="#{rangerBean.noRangersAvailable()}"></h:body>
+		<br></br>
+		<div>
+			<h:form>
+				<p:remoteCommand autoRun="true"
+					action="#{userLoginBean.validation()}" />
+				<div style="display: flex; margin: 0 auto; width: 800px;">
+					<table cellspacing="10px" style="width: 400px;">
+						<tr>
+							<td style="width: 150px;"><h:outputLabel value="Status"
+									style="font-size: 20px;" /></td>
+							<td><h:outputText value="ACTIVE"
+									rendered="#{fireEventBean.selectedFireEvent.active}"
+									style="font-weight: bold;color: #f25b28; font-size: 21px;" />
+								<h:outputText value="RESOLVED"
+									rendered="#{not fireEventBean.selectedFireEvent.active}"
+									style="font-weight: bold;font-size: 20px; color:#148c19" /></td>
+						</tr>
+						<tr>
+							<td><h:outputLabel value="Assigned ranger"
+									style="font-size: 20px;" /></td>
+							<td><h:outputText
+									value="#{fireEventBean.selectedFireEvent.ranger.fullName}"
+									rendered="#{fireEventBean.selectedFireEvent.ranger != null}"
+									style="font-weight: bold; font-size: 20px;" /> <h:outputText
+									value="UNASSIGNED"
+									rendered="#{fireEventBean.selectedFireEvent.ranger == null and fireEventBean.selectedFireEvent.active}"
+									style="color:#f25b28; font-size: 16px; font-weight: bold" /> <h:outputText
+									value="UNASSIGNED"
+									rendered="#{fireEventBean.selectedFireEvent.ranger == null and not fireEventBean.selectedFireEvent.active}"
+									style="font-size: 16px; font-weight: bold" /></td>
+						</tr>
+					</table>
+
+					<table cellspacing="10px" style="width: 400px;">
+
+						<tr>
+							<td colspan="2"><h:outputLabel value="Fire event location"
+									style="font-size: 20px; font-weight: bold;" /></td>
+						</tr>
+
+						<tr>
+							<td style="width: 150px;"><h:outputLabel value="State:" /></td>
+							<td><h:outputText
+									value="#{fireEventBean.selectedFireEvent.state}" /></td>
+						</tr>
+
+						<tr>
+							<td><h:outputLabel value="Direction:" /></td>
+							<td><h:outputText
+									value="#{fireEventBean.selectedFireEvent.direction}" /></td>
+						</tr>
+
+						<tr>
+							<td colspan="2"><h:outputLabel value="Report details"
+									style="font-size: 20px; font-weight: bold;" /></td>
+						</tr>
+
+						<tr>
+							<td><h:outputLabel value="Date:" /></td>
+							<td><h:outputText
+									value="#{fireEventBean.selectedFireEvent.reportedDate}" /></td>
+						</tr>
+
+						<tr>
+							<td><h:outputLabel value="Reporter:" /></td>
+							<td><h:outputText
+									value="#{fireEventBean.selectedFireEvent.reportedBy.fullName} / " />
+								<h:outputText
+									value="#{fireEventBean.selectedFireEvent.reportedBy.mobile}" />
+							</td>
+						</tr>
+
+						<tr>
+							<td><h:outputLabel value="Description:" /></td>
+							<td><h:outputText
+									value="#{fireEventBean.selectedFireEvent.description}" /></td>
+						</tr>
+
+					</table>
+				</div>
+			</h:form>
+
+			<h:form>
+				<p:messages id="Warning" showDetail="true" closable="true"></p:messages>
+			</h:form>
+
+			<h:panelGroup layout="block"
+				rendered="#{fireEventBean.selectedFireEvent.active}">
+				<h2 style="text-align: left;">Available Rangers</h2>
+			</h:panelGroup>
+
+
+			<h:form>
+				<td><p:dataTable value="#{rangerBean.availableRangers}"
+						tableStyle="table-layout: auto;" var="ranger"
+						resizableColumns="true" styleClass="table"
+						headerClass="nameTableHeader"
+						rowClasses="nameTableOddRow,nameTableEvenRow"
+						styles="table-layout: fixed;"
+						rendered="#{fireEventBean.selectedFireEvent.active}">
+						<p:column headerText="Name">
+							<h:outputText value="#{ranger.fullName}" />
+						</p:column>
+
+						<p:column headerText="Phone">
+							<h:outputText value="#{ranger.phoneNumber}" />
+						</p:column>
+
+						<p:column headerText="Email">
+							<h:outputText value="#{ranger.emailAddress}" />
+						</p:column>
+
+						<p:column headerText="State">
+							<h:outputText value="#{ranger.location}" />
+						</p:column>
+
+						<p:column headerText="Direction">
+							<h:outputText value="#{ranger.direction}" />
+						</p:column>
+						<p:column headerText="Assign">
+							<p:commandButton value="Assign"
+								action="#{appStorageBean.assignRanger(fireEventBean.selectedFireEvent, ranger)}"
+								ajax="false" />
+						</p:column>
+					</p:dataTable></td>
+
+			</h:form>
+			<div style="text-align: right; margin: 15px">
+				<p:button value="Back" outcome="staff-dash" ajax="false" />
+			</div>
+		</div>
+	</ui:define>
+</ui:composition>

@@ -1,0 +1,142 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition template="template.xhtml"
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui">
+
+	<ui:define name="title">Staff Dashboard</ui:define>
+	<ui:param name="renderUser" value="true" />
+	<ui:param name="renderLogout" value="true" />
+
+	<ui:define name="content">
+		<!-- <h:body onload="#{userLoginBean.validation()}"></h:body>
+			<h:body onload="#{rangerBean.noRangersAvailable()}"></h:body>-->
+		<h:form>
+			<p:remoteCommand autoRun="true"
+				action="#{userLoginBean.validation()}" />
+			<p:remoteCommand autoRun="true"
+				action="#{rangerBean.noRangersAvailable()}" />
+			<p:tabMenu activeIndex="#{param.i}">
+				<p:menuitem value="Fire Reports" url="staff-dash.jsf">
+					<f:param name="i" value="0" />
+				</p:menuitem>
+				<p:menuitem value="Rangers" url="rangers-table.jsf">
+					<f:param name="i" value="1" />
+				</p:menuitem>
+				<p:menuitem value="Forest Areas" url="forests-table.jsf">
+					<f:param name="i" value="2" />
+				</p:menuitem>
+			</p:tabMenu>
+		</h:form>
+		
+		<div class="userFireEvents">
+			<h:form>
+				<div>
+					<p:messages id="Warning" showDetail="true" closable="true" />
+
+					<p:commandButton styleClass="rangerWarnBtn"
+						value="Click for details" type="button"
+						onclick="PF('dlg2').show();" rendered="#{rangerBean.noRangers}">
+					</p:commandButton>
+				</div>
+			</h:form>
+
+			<p:dialog header="No available rangers" widgetVar="dlg2" modal="true"
+				height="100" width="300">
+				<h:outputText value="#{rangerBean.numberOfUnassignedEvents()}" />
+			</p:dialog>
+			
+			<div>
+
+				<h:form>
+					<div class="tableHeader">
+						<span class="tableHeaderTitle">Fire Events Dashboard</span>
+						<h:button styleClass="reportFireBtn" value="Add fire event"
+							outcome="report-fire" />
+					</div>
+					<p:dataTable value="#{appStorageBean.fireEvents}" var="fireEvent"
+						headerClass="nameTableHeader"
+						rowClasses="nameTableOddRow,nameTableEvenRow" paginator="true"
+						rows="6" paginatorPosition="bottom" style="text-align: center">
+
+						<p:column headerText="Status" sortBy="#{fireEvent.active}">
+							<h:outputText value="ACTIVE"
+								style="color: #f25b28; font-size: 16px; font-weight: bold"
+								rendered="#{fireEvent.active == true}" />
+							<h:outputText value="RESOLVED"
+								style="font-size: 16px; font-weight: bold; color:#148c19;"
+								rendered="#{fireEvent.active == false}" />
+						</p:column>
+
+						<p:column>
+							<f:facet name="header">Assigned to</f:facet>
+							<h:outputText value="#{fireEvent.ranger.fullName}"
+								rendered="#{fireEvent.ranger != null}" />
+							<h:outputText value="UNASSIGNED"
+								rendered="#{fireEvent.ranger == null and fireEvent.active}"
+								style="color:#f25b28; font-size: 16px; font-weight: bold" />
+							<h:outputText value="UNASSIGNED"
+								rendered="#{fireEvent.ranger == null and not fireEvent.active }"
+								style="font-size: 16px; font-weight: bold" />
+						</p:column>
+
+						<p:column headerText="Reported date"
+							sortBy="#{fireEvent.reportedDate}" style="width: 140px;">
+							<h:outputText value="#{fireEvent.reportedDate}">
+								<f:convertDateTime dateStyle="full"
+									pattern="yyyy.MM.dd 'at' HH:mm:ss" />
+							</h:outputText>
+						</p:column>
+
+						<p:column headerText="State" sortBy="#{fireEvent.state}">
+							<f:facet name="header">State</f:facet>
+							<h:outputText name="fireState" value="#{fireEvent.state}" />
+						</p:column>
+
+						<p:column>
+							<f:facet name="header">Direction</f:facet>
+							<h:outputText name="fireDirection" value="#{fireEvent.direction}" />
+						</p:column>
+
+						<p:column>
+							<f:facet name="header">Description</f:facet>
+							<h:outputText value="#{fireEvent.description}" />
+						</p:column>
+
+						<p:column>
+							<f:facet name="header">Reported By</f:facet>
+							<h:outputText value="#{fireEvent.reportedBy.fullName}" />
+						</p:column>
+
+						<p:column>
+							<f:facet name="header">Actions</f:facet>
+
+							<p:commandButton
+								action="#{fireEventBean.viewFireDetails(fireEvent)}"
+								value="Details"
+								style="width:100px; height: 30px; margin-bottom:2px;"
+								ajax="false" />
+							<p:commandButton value="Resolve"
+								action="#{appStorageBean.resolveFire(fireEvent)}" update="@all"
+								rendered="#{fireEvent.active}" style="width:100px; height:30px;">
+								<p:confirm header="Confirmation"
+									message="Please confirm the resolve action" />
+							</p:commandButton>
+
+							<p:confirmDialog global="true" showEffect="fade"
+								hideEffect="fade">
+								<p:commandButton value="Resolve" type="button"
+									styleClass="ui-confirmdialog-yes" />
+								<p:commandButton value="Cancel" type="button"
+									styleClass="ui-confirmdialog-no" />
+							</p:confirmDialog>
+						</p:column>
+					</p:dataTable>
+				</h:form>
+			</div>
+		</div>
+	</ui:define>
+</ui:composition>

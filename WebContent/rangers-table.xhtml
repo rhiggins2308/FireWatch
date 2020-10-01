@@ -1,0 +1,135 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition template="template.xhtml"
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui">
+
+	<ui:define name="title">Rangers</ui:define>
+	<ui:param name="renderUser" value="true" />
+	<ui:param name="renderLogout" value="true" />
+
+	<ui:define name="content">
+		<h:form>
+			<p:remoteCommand autoRun="true"
+				action="#{userLoginBean.validation()}" />
+			<p:tabMenu activeIndex="#{param.i}">
+				<p:menuitem value="Fire Reports" url="staff-dash.jsf">
+					<f:param name="i" value="0" />
+				</p:menuitem>
+				<p:menuitem value="Rangers" url="rangers-table.jsf">
+					<f:param name="i" value="1" />
+				</p:menuitem>
+				<p:menuitem value="Forest Areas" url="forests-table.jsf">
+					<f:param name="i" value="2" />
+				</p:menuitem>
+			</p:tabMenu>
+		</h:form>
+		
+		<div class="userFireEvents">
+			<h:form>
+				<p:messages id="messages" closable="true" />
+				<div class="tableHeader">
+					<span class="tableHeaderTitle">Rangers list</span>
+					<p:button class="addRanger" value="Add Ranger" outcome="add-ranger"
+						ajax="false" />
+				</div>
+
+				<p:dataTable value="#{appStorageBean.rangers}"
+					tableStyle="table-layout: auto;" var="ranger"
+					resizableColumns="true" styleClass="table"
+					headerClass="nameTableHeader"
+					rowClasses="nameTableOddRow,nameTableEvenRow" paginator="true"
+					rows="6" paginatorPosition="bottom" styles="table-layout: fixed;">
+
+					<p:column headerText="Status" style="width:100px;"
+						sortBy="#{ranger.status}">
+						<h:outputText value="Available"
+							rendered="#{ranger.status == true}" />
+						<h:outputText value="Not Available"
+							rendered="#{ranger.status == false}" />
+					</p:column>
+					
+					<p:column>
+						<f:facet name="header">Full Name</f:facet>
+						<p:inputText id="Fullname" required="true" style="width:120px"
+							value="#{ranger.fullName}" rendered="#{ranger.editable}" />
+						<h:outputText value="#{ranger.fullName}"
+							rendered="#{not ranger.editable}" />
+					</p:column>
+
+					<p:column>
+						<f:facet name="header">Phone</f:facet>
+						<p:inputText id="Phone" required="true" style="width:110px"
+							value="#{ranger.phoneNumber}" rendered="#{ranger.editable}" />
+						<h:outputText value="#{ranger.phoneNumber}"
+							rendered="#{not ranger.editable}" />
+					</p:column>
+
+					<p:column id="rangerEmail">
+						<f:facet name="header">Email Address</f:facet>
+						<p:inputText id="Email" required="true" style="width:200px"
+							value="#{ranger.emailAddress}" rendered="#{ranger.editable}" />
+						<h:outputText value="#{ranger.emailAddress}"
+							rendered="#{not ranger.editable}" />
+					</p:column>
+
+					<p:column headerText="State" sortBy="#{ranger.location}">
+						<p:selectOneMenu id="State" required="true"
+							value="#{ranger.location}" rendered="#{ranger.editable}"
+							style="width:120px">
+							<f:selectItem itemLabel="Choose state" itemValue="" />
+							<f:selectItems value="#{appStorageBean.states}" />
+						</p:selectOneMenu>
+						<h:outputText value="#{ranger.location}"
+							rendered="#{not ranger.editable}" />
+					</p:column>
+
+					<p:column>
+						<f:facet name="header">Direction</f:facet>
+						<p:selectOneMenu id="Direction" required="true"
+							style="width:120px" value="#{ranger.direction}"
+							rendered="#{ranger.editable}">
+							<f:selectItem itemLabel="Choose direction" itemValue="" />
+							<f:selectItems value="#{appStorageBean.directions}" />
+						</p:selectOneMenu>
+						<h:outputText value="#{ranger.direction}"
+							rendered="#{not ranger.editable}" />
+					</p:column>
+
+					<p:column style="width:200px">
+						<f:facet name="header">Actions</f:facet>
+						<p:commandButton value="Save"
+							action="#{rangerBean.saveRanger(ranger)}"
+							rendered="#{ranger.editable}" ajax="false">
+							<f:param name="i" value="1" />
+						</p:commandButton>
+						<p:commandButton value="Edit"
+							action="#{rangerBean.editRanger(ranger)}"
+							rendered="#{not ranger.editable}" ajax="false">
+							<f:param name="i" value="1" />
+						</p:commandButton>
+						<p:spacer width="5" />
+
+						<p:commandButton value="Delete"
+							action="#{appStorageBean.deleteRanger(ranger)}"
+							rendered="#{not ranger.editable}" disabled="#{not ranger.status}"
+							update="@form">
+							<p:confirm header="Confirmation"
+								message="Are you sure you want to delete the ranger?" />
+						</p:commandButton>
+
+						<p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
+							<p:commandButton value="Delete" type="button"
+								styleClass="ui-confirmdialog-yes" />
+							<p:commandButton value="Cancel" type="button"
+								styleClass="ui-confirmdialog-no" />
+						</p:confirmDialog>
+					</p:column>
+				</p:dataTable>
+			</h:form>
+		</div>
+	</ui:define>
+</ui:composition>

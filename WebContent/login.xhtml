@@ -1,0 +1,57 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition template="template.xhtml"
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui">
+
+	<ui:define name="title">Login Page</ui:define>
+
+	<ui:define name="content">
+		<div>
+			<h2>Did you spot a fire?</h2>
+			<h3>Report it now, we will handle it immediately!</h3>
+
+			<br />
+			<h:form>
+				<h:messages globalOnly="true"
+					style="font-weight:bold;margin:8px;list-style-type:none; text-align:center" />
+				<table class="fireTable">
+					<tr>
+						<td class="labelColumn"><h:outputText value="Username " /></td>
+						<td><p:inputText required="true"
+								requiredMessage="Username is required" size="20"
+								value="#{userLoginBean.username}" id="username" /></td>
+						<td><p:message for="username" display="text"
+								style="color:red;" />
+							<p:messages for="loginfail1" showIcon="false" showDetail="true" /></td>
+					</tr>
+					<tr>
+						<td class="labelColumn"><h:outputText value="Password " /></td>
+						<td><p:password id="password"
+								value="#{userLoginBean.password}" required="true"
+								requiredMessage="Password is required" /></td>
+						<td><p:message for="password" display="text"
+								style="color:red;" />
+							<p:messages for="loginfail2" showIcon="false" showDetail="true" /></td>
+					</tr>
+					<tr>
+						<td></td>
+						<td class="buttonsColumn"><p:commandButton value="Login"
+								action="#{userLoginBean.login}" ajax="false" id="loginBtn" /></td>
+					</tr>
+
+				</table>
+			</h:form>
+
+			<p>
+				Not a member yet?<br />
+				<p:link outcome="user-registration"
+					value="Register Here to Report a Fire" />
+			</p>
+		</div>
+	</ui:define>
+
+</ui:composition>

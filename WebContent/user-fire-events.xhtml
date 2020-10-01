@@ -1,0 +1,57 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition template="template.xhtml"
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui">
+
+	<ui:define name="title">Fire  user event Page</ui:define>
+	<ui:param name="renderUser" value="true" />
+	<ui:param name="renderLogout" value="true" />
+
+	<ui:define name="content">
+		<h:form>
+		
+			<p:remoteCommand autoRun="true"
+				action="#{userLoginBean.validation()}" />
+			<div class="userFireEvents">
+				<p:messages id="messages" showDetail="true" closable="true" />
+
+				<div class="tableHeader">
+					<span class="tableHeaderTitle">Active fire events</span>
+					<h:button styleClass="reportFireBtn" value="Report a fire"
+						outcome="report-fire" />
+				</div>
+				<p:dataTable value="#{fireEventBean.activeFireEvents}" var="event"
+					styleClass="table" paginator="true" rows="10"
+					paginatorPosition="bottom">
+
+					<p:column>
+						<f:facet name="header">State</f:facet>
+						<h:outputText value="#{event.state}" />
+					</p:column>
+
+					<p:column>
+						<f:facet name="header">Direction</f:facet>
+						<h:outputText value="#{event.direction}" />
+					</p:column>
+
+					<p:column>
+						<f:facet name="header">Date</f:facet>
+						<h:outputText value="#{event.reportedDate}">
+							<f:convertDateTime dateStyle="full"
+								pattern="yyyy.MM.dd 'at' HH:mm:ss" />
+						</h:outputText>
+					</p:column>
+
+					<p:column>
+						<f:facet name="header">Description</f:facet>
+						<h:outputText value="#{event.description}" />
+					</p:column>
+
+				</p:dataTable>
+			</div>
+		</h:form>
+	</ui:define>
+</ui:composition>

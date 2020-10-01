@@ -1,0 +1,54 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:composite="http://java.sun.com/jsf/composite"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui">
+
+<h:head>
+	<h:outputStylesheet library="css" name="styles.css" />
+	<title><ui:insert name="title"></ui:insert></title>
+</h:head>
+<h:body>
+
+	<div id="header" class="header">
+		<h:graphicImage library="images" name="header-pic.png"
+			style="width: 100%;" />
+		<div class="header-bottom">
+			<div>
+				<h:graphicImage library="images" name="logo-icon.png" />
+			</div>
+			<div class="header-logo-text">
+				<h:outputText styleClass="header-text" style="color: #eb5d07"
+					value="FIRE" />
+				<h:outputText styleClass="header-text" style="color: white"
+					value=" Watch" />
+				<h:outputText styleClass="header-text-system" style="color: wheat"
+					value=" SYSTEM" />
+			</div>
+			<div class="header-logout">
+				<h:form>
+					<p:outputLabel style="color:white;"
+						value="Welcome: #{userLoginBean.loginAttempt.fullName}  "
+						rendered="#{renderUser}" />
+						&nbsp;
+						<p:commandButton styleClass="logout-link"
+						action="#{userLoginBean.logout}" value="Log out"
+						rendered="#{renderLogout}" />
+						&nbsp;
+					</h:form>
+			</div>
+		</div>
+	</div>
+
+	<div id="content" class="content">
+		<ui:insert name="content">Main content</ui:insert>
+	</div>
+
+	<div id="footer" class="footer">
+		<h:outputText value="&copy; Runtime Terror CSE 2020" />
+	</div>
+</h:body>
+</html>

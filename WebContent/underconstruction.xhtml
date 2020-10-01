@@ -1,0 +1,35 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition template="template.xhtml"
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui">
+
+	<ui:define name="title">Under Construction</ui:define>
+
+	<ui:define name="content">
+		<h:form>
+			<p:tabMenu>
+				<p:menuitem value="Fire Reports" url="staff-dash.jsf"></p:menuitem>
+				<p:menuitem value="Rangers" url="rangers-table.jsf"></p:menuitem>
+				<p:menuitem value="Forest Areas" url="underconstruction.jsf"></p:menuitem>
+			</p:tabMenu>
+		</h:form>
+
+		<div class="pageDiv">
+			<h2>This Page is Under Construction</h2>
+			<h3>
+				Hard hats and safety wear must be worn<br />Social distancing and
+				hygiene must be practiced at all times!
+			</h3>
+
+			<p>
+				Not Equipped? ... <br /> <a href="staff-dash.jsf">Get outta
+					here!!</a>
+			</p>
+		</div>
+	</ui:define>
+
+</ui:composition>

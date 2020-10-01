@@ -1,0 +1,74 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition template="template.xhtml"
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui">
+
+	<ui:define name="title">Report a fire event</ui:define>
+	<ui:param name="renderUser" value="true" />
+	<ui:param name="renderLogout" value="true" />
+
+	<ui:define name="content">
+		<h:form>
+			<p:remoteCommand autoRun="true"
+				action="#{userLoginBean.validation()}" />
+			<h4>Where did you spot the fire?</h4>
+
+			<table class="formTable">
+				<tr>
+					<td class="labelColumn"><p:outputLabel for="@next"
+							value="State:" /></td>
+					<td><p:selectOneMenu id="State" required="true"
+							requiredMessage="State required" value="#{fireEventBean.state}"
+							style="width: 285px">
+							<f:selectItem itemLabel="Choose state" itemValue="" />
+							<f:selectItems value="#{appStorageBean.states}" />
+						</p:selectOneMenu></td>
+					<td><p:message for="State" display="text" /></td>
+				</tr>
+
+				<tr>
+					<td class="labelColumn"><p:outputLabel for="@next"
+							value="Direction:" /></td>
+					<td><p:selectOneMenu id="Direction" required="true"
+							requiredMessage="Direction required"
+							value="#{fireEventBean.direction}" style="width: 285px">
+							<f:selectItem itemLabel="Choose direction" itemValue="" />
+							<f:selectItems value="#{appStorageBean.directions}" />
+						</p:selectOneMenu></td>
+					<td><p:message for="Direction" display="text" /></td>
+				</tr>
+
+				<tr>
+					<td class="labelColumn"><p:outputLabel for="@next"
+							value="Description:" /></td>
+					<td><p:inputTextarea id="Description"
+							value="#{fireEventBean.description}"
+							placeholder="Please provide us with more details..."
+							onfocus="this.placeholder = ''"
+							onblur="this.placeholder = 'Please provide us with more details...'"
+							rows="20" cols="45" required="true"
+							requiredMessage="Brief description required">
+						</p:inputTextarea></td>
+					<td><p:message for="Description" display="text" /></td>
+				</tr>
+
+				<tr>
+					<td></td>
+					<td><p>
+							<p:commandButton id="Report" styleClass="ActionButton"
+								action="#{fireEventBean.addFireEvent()}" value="Report"
+								title="Report" align="center" ajax="false" />
+							&nbsp;
+							<p:commandButton id="Cancel" styleClass="ActionButton"
+								action="#{fireEventBean.cancel}" immediate="true" value="Cancel"
+								title="Cancel" align="center" ajax="false" />
+						</p></td>
+					<td></td>
+				</tr>
+			</table>
+		</h:form>
+	</ui:define>
+</ui:composition>

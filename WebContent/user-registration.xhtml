@@ -1,0 +1,83 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition template="template.xhtml"
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui">
+
+	<ui:define name="title">User Registration</ui:define>
+
+	<ui:define name="content">
+		<div>
+
+			<h2>Fire Watch</h2>
+			<h3>Registration form</h3>
+
+			<h:form>
+				<table class="fireTable">
+					<tr>
+						<td class="labelColumn">Full name*</td>
+						<td><p:inputText required="true"
+								requiredMessage="Full name is required" size="20"
+								value="#{userRegistrationBean.fullName}" id="fullName" /></td>
+						<td><p:message for="fullName" display="text"
+								style="color:red;" /></td>
+
+					</tr>
+					<tr>
+						<td class="labelColumn">Address</td>
+						<td><p:inputText size="20"
+								value="#{userRegistrationBean.address}" /></td>
+
+					</tr>
+					<tr>
+						<td class="labelColumn">Mobile*</td>
+						<td><p:inputText required="true"
+								requiredMessage="Mobile number is required" size="20"
+								value="#{userRegistrationBean.mobile}" id="mobile"
+								title="We're asking for your number so we can contact you for more details" />
+							<p:tooltip for="mobile" showEvent="focus" hideEvent="blur" /></td>
+						<td><p:message for="mobile" display="text" style="color:red;" />
+							<p:messages for="phoneexists" showIcon="false" showDetail="true" /></td>
+					</tr>
+					<tr>
+						<td class="labelColumn">Username*</td>
+						<td><p:inputText required="true"
+								requiredMessage="Username is required" size="20"
+								value="#{userRegistrationBean.username}" id="username" /></td>
+						<td><p:message for="username" display="text"
+								style="color:red;" />
+							<p:messages for="userexists" showIcon="false" showDetail="true" /></td>
+					</tr>
+					<tr>
+						<td class="labelColumn">Password*</td>
+						<td><p:password id="password"
+								value="#{userRegistrationBean.password}" feedback="true"
+								required="true" requiredMessage="Password is required" /></td>
+						<td><p:message for="password" display="text"
+								style="color:red;" /></td>
+					</tr>
+					<tr>
+						<td class="labelColumn">Confirm password*</td>
+						<td><p:password id="passwordC"
+								value="#{userRegistrationBean.passwordC}" required="true"
+								requiredMessage="Password confirmation is required" /></td>
+						<td><p:message for="passwordC" display="text"
+								style="color:red;" />
+							<p:messages for="passwordmismatch" showIcon="false"
+								showDetail="true" /></td>
+					</tr>
+					<tr>
+						<td></td>
+						<td class="buttonsColumn"><p:commandButton value="Register"
+								action="#{userRegistrationBean.addUser}" ajax="false" /> <p:link
+								outcome="login.jsf" value="Return to login page"
+								styleClass="fireLink" /></td>
+					</tr>
+
+				</table>
+			</h:form>
+		</div>
+	</ui:define>
+
+</ui:composition>

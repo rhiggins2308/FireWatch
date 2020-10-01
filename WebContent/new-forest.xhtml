@@ -1,0 +1,82 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition template="template.xhtml"
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:f="http://java.sun.com/jsf/core">
+
+	<ui:define name="title">Add Forest Details</ui:define>
+	<ui:param name="renderUser" value="true" />
+	<ui:param name="renderLogout" value="true" />
+
+	<ui:define name="content">
+		<h:form>
+			<p:remoteCommand autoRun="true"
+				action="#{userLoginBean.validation()}" />
+			<h4>Enter the forest details</h4>
+
+			<table class="formTable">
+				<tr>
+					<td class="labelColumn"><p:outputLabel for="@next"
+							value="Forest name:" /></td>
+					<td><p:inputText id="forestName" required="true"
+							requiredMessage="Forest name required" value="#{forestBean.name}"
+							style="width: 285px" /></td>
+					<td><p:message for="forestName" display="text" /></td>
+				</tr>
+
+				<tr>
+					<td class="labelColumn"><p:outputLabel for="@next"
+							value="State:" /></td>
+					<td><p:selectOneMenu id="State" required="true"
+							requiredMessage="State required" value="#{forestBean.state}"
+							style="width: 272px">
+							<f:selectItem itemLabel="Choose state" itemValue="" />
+							<f:selectItems value="#{appStorageBean.states}" />
+						</p:selectOneMenu></td>
+					<td><p:message for="State" display="text" /></td>
+				</tr>
+
+				<tr>
+					<td class="labelColumn"><p:outputLabel for="@next"
+							value="Direction:" /></td>
+					<td><p:selectOneMenu id="Direction" required="true"
+							requiredMessage="Direction required"
+							value="#{forestBean.direction}" style="width: 272px">
+							<f:selectItem itemLabel="Choose direction" itemValue="" />
+							<f:selectItems value="#{appStorageBean.directions}" />
+						</p:selectOneMenu></td>
+					<td><p:message for="Direction" display="text" /></td>
+				</tr>
+
+				<tr>
+					<td class="labelColumn"><p:outputLabel for="@next"
+							value="Surface description:" /></td>
+					<td><p:inputText id="description" required="true"
+							requiredMessage="Surface description required"
+							value="#{forestBean.surface}" style="width: 285px" /></td>
+					<td><p:message for="description" display="text" /></td>
+				</tr>
+
+				<tr>
+					<td></td>
+					<td><p>
+							<p:commandButton id="Add" styleClass="ActionButton"
+								action="#{forestBean.addForest()}" value="Add" title="Add"
+								align="center" ajax="false">
+								<f:param name="i" value="2" />
+							</p:commandButton>
+							&nbsp;
+							<p:commandButton id="Cancel" styleClass="ActionButton"
+								action="#{forestBean.cancel}" immediate="true" value="Cancel"
+								title="Cancel" ajax="false" align="center">
+								<f:param name="i" value="2" />
+							</p:commandButton>
+						</p></td>
+					<td></td>
+				</tr>
+			</table>
+		</h:form>
+	</ui:define>
+</ui:composition>

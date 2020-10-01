@@ -1,0 +1,91 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition template="template.xhtml"
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui">
+
+	<ui:define name="title">Add ranger</ui:define>
+	<ui:param name="renderUser" value="true" />
+	<ui:param name="renderLogout" value="true" />
+
+	<ui:define name="content">
+		<h:form>
+			<p:remoteCommand autoRun="true"
+				action="#{userLoginBean.validation()}" />
+			<h4>Enter the ranger details</h4>
+
+			<table class="formTable">
+				<tr>
+					<td class="labelColumn"><p:outputLabel for="@next"
+							value="Full name:" /></td>
+					<td><p:inputText id="Fullname" required="true"
+							requiredMessage="Full name required"
+							value="#{rangerBean.fullName}" style="width: 285px" /></td>
+					<td><p:message for="Fullname" display="text" /></td>
+				</tr>
+
+				<tr>
+					<td class="labelColumn"><p:outputLabel for="@next"
+							value="Mobile:" /></td>
+					<td><p:inputText id="Mobile" required="true"
+							requiredMessage="Mobile required"
+							value="#{rangerBean.phoneNumber}" style="width: 285px" /></td>
+					<td><p:message for="Mobile" display="text" /></td>
+				</tr>
+
+				<tr>
+					<td class="labelColumn"><p:outputLabel for="@next"
+							value="Email address:" /></td>
+					<td><p:inputText id="Email" required="true"
+							requiredMessage="Email address required"
+							value="#{rangerBean.emailAddress}" style="width: 285px" /></td>
+					<td><p:message for="Email" display="text" /></td>
+				</tr>
+
+				<tr>
+					<td class="labelColumn"><p:outputLabel for="@next"
+							value="State:" /></td>
+					<td><p:selectOneMenu id="State" required="true"
+							requiredMessage="State required" value="#{rangerBean.state}"
+							style="width: 273px">
+							<f:selectItem itemLabel="Choose state" itemValue="" />
+							<f:selectItems value="#{appStorageBean.states}" />
+						</p:selectOneMenu></td>
+					<td><p:message for="State" display="text" /></td>
+				</tr>
+
+				<tr>
+					<td class="labelColumn"><p:outputLabel for="@next"
+							value="Direction:" /></td>
+					<td><p:selectOneMenu id="Direction" required="true"
+							requiredMessage="Direction required"
+							value="#{rangerBean.direction}" style="width: 273px">
+							<f:selectItem itemLabel="Choose direction" itemValue="" />
+							<f:selectItems value="#{appStorageBean.directions}" />
+						</p:selectOneMenu></td>
+					<td><p:message for="Direction" display="text" /></td>
+				</tr>
+
+				<tr>
+					<td></td>
+					<td><p>
+							<p:commandButton id="Add" styleClass="ActionButton"
+								action="#{rangerBean.addRanger()}" value="Add" title="Add"
+								align="center" ajax="false">
+								<f:param name="i" value="1" />
+							</p:commandButton>
+							&nbsp;
+							<p:commandButton id="Cancel" styleClass="ActionButton"
+								action="#{rangerBean.cancel}" immediate="true" value="Cancel"
+								title="Cancel" align="center" ajax="false">
+								<f:param name="i" value="1" />
+							</p:commandButton>
+						</p></td>
+					<td></td>
+				</tr>
+			</table>
+		</h:form>
+	</ui:define>
+</ui:composition>
